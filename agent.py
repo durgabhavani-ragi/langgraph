@@ -278,10 +278,14 @@ class AgentInput(BaseModel):
     task: str
 
 
-def run_agent(inputs: AgentInput):
+from langchain_core.runnables import RunnableLambda
+
+def run_agent(inputs):
+    task = inputs["task"]
+
     result = rt_app.invoke(
         {
-            "messages": [HumanMessage(content=inputs.task)]
+            "messages": [HumanMessage(content=task)]
         }
     )
 
@@ -290,12 +294,7 @@ def run_agent(inputs: AgentInput):
         "report": result.get("report")
     }
 
-
-agent = RunnableLambda(run_agent).with_types(
-    input_type=AgentInput
-)
-
-print("LangGraph compiled successfully.")
+agent = RunnableLambda(run_agent)
 print("LangGraph compiled successfully.")
 
 
