@@ -271,16 +271,15 @@ rt_workflow.add_edge("tester", END)
 rt_app = rt_workflow.compile()
 
 from pydantic import BaseModel
-from langchain_core.runnables import RunnableLambda
-
 
 class AgentInput(BaseModel):
     task: str
 
 
-from langchain_core.runnables import RunnableLambda
-
 def run_agent(inputs):
+    if "input" in inputs:
+        inputs = inputs["input"]
+
     task = inputs["task"]
 
     result = rt_app.invoke(
@@ -294,7 +293,9 @@ def run_agent(inputs):
         "report": result.get("report")
     }
 
-agent = RunnableLambda(run_agent)
+agent = RunnableLambda(run_agent).with_types(
+    input_type=AgentInput
+)
 print("LangGraph compiled successfully.")
 
 
