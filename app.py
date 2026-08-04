@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from langserve import add_routes
 
@@ -12,5 +11,6 @@ app = FastAPI(
 add_routes(
     app,
     agent,
-    path="/"
+    path="/agent",
+    playground_type="default"
 )
