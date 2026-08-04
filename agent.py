@@ -271,6 +271,7 @@ rt_workflow.add_edge("tester", END)
 rt_app = rt_workflow.compile()
 
 from pydantic import BaseModel
+from langchain_core.runnables import RunnableLambda
 
 class AgentInput(BaseModel):
     task: str
