@@ -294,8 +294,16 @@ def run_agent(inputs):
         "report": result.get("report")
     }
 
+
+from pydantic import BaseModel
+
+class AgentOutput(BaseModel):
+    generated_code: str
+    report: str
+
 agent = RunnableLambda(run_agent).with_types(
-    input_type=AgentInput
+    input_type=AgentInput,
+    output_type=AgentOutput
 )
 print("LangGraph compiled successfully.")
 
