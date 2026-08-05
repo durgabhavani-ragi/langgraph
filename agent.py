@@ -292,18 +292,26 @@ def run_agent(inputs):
     return {
         "generated_code": result.get("code"),
         "report": result.get("report")
-    }
+    }return f"""
+==========================
+GENERATED PYTHON CODE
+==========================
+
+{result.get("code")}
+
+==========================
+TEST REPORT
+==========================
+
+{result.get("report")}
+"""
 
 
 from pydantic import BaseModel
 
-class AgentOutput(BaseModel):
-    generated_code: str
-    report: str
 
 agent = RunnableLambda(run_agent).with_types(
-    input_type=AgentInput,
-    output_type=AgentOutput
+    input_type=AgentInput
 )
 print("LangGraph compiled successfully.")
 
