@@ -292,7 +292,7 @@ def run_agent(inputs):
     return {
         "generated_code": result.get("code"),
         "report": result.get("report")
-    }return f"""
+    }
 ==========================
 GENERATED PYTHON CODE
 ==========================
